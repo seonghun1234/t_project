@@ -1,0 +1,187 @@
+/* 배경색 설정 */
+body {
+    background: #FFFEF0;
+    color: #4D3E3E;
+}
+
+/* 지도의 크기를 설정합니다 */
+#hospital-map {
+    height: 100%;
+    width: 100%;
+}
+
+/*****************/
+/* 스위치 버튼 CSS */
+label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+[type="checkbox"] {
+    appearance: none;
+    position: relative;
+    border: max(2px, 0.1em) solid gray;
+    border-radius: 1.25em;
+    width: 2.25em;
+    height: 1.25em;
+}
+
+[type="checkbox"]::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    transform: scale(0.8);
+    background-color: gray;
+    transition: left 250ms linear;
+}
+
+[type="checkbox"]:checked {
+    background-color: #7DAF82;
+    border-color: #7DAF82;
+}
+
+[type="checkbox"]:checked::before {
+    background-color: white;
+    left: 1em;
+}
+
+[type="checkbox"]:disabled {
+    border-color: lightgray;
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+[type="checkbox"]:disabled:before {
+    background-color: lightgray;
+}
+
+[type="checkbox"]:disabled + span {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+[type="checkbox"]:focus-visible {
+    outline-offset: max(2px, 0.1em);
+    outline: max(2px, 0.1em) solid #7DAF82;
+}
+
+[type="checkbox"]:enabled:hover {
+    box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
+}
+
+/*****************/
+/* 사이드바 스타일 */
+#hospital-sidebar {
+    position: fixed;
+    top: 0;
+    left: -430px; /* 화면 밖으로 숨김 */
+    width: 430px;
+    height: 100%;
+    background-color: white;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+    transition: left 0.3s ease;
+    z-index: 10;
+
+    overflow-y: scroll; /* 세로 스크롤 허용 */
+    scrollbar-width: none; /* Firefox에서 스크롤바 숨김 */
+}
+
+/* 사이드바가 열렸을 때 */
+#hospital-sidebar.open {
+    left: 0;
+}
+
+/* 독립된 토글 버튼 스타일 */
+#hospital-toggle-button {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 25px;
+    height: 60px;
+    background-color: white;
+    color: #7DAF82;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 15;
+    border-radius: 0 8px 8px 0;
+    border: 1px solid #dcdcdc;
+    transition: left 0.3s ease;
+}
+
+/* 사이드바가 열렸을 때 토글 버튼 위치 */
+#hospital-sidebar.open + #hospital-toggle-button {
+    left: 430px;
+}
+
+/*****************/
+
+/* 리스트 항목 기본 스타일 */
+#hospital-sidebar ul li {
+    background-color: white; /* 기본 배경색 */
+    cursor: default;
+    transition: background-color 0.3s ease; /* 부드러운 전환 효과 */
+}
+
+/* 마우스를 가져다댔을 때 */
+#hospital-sidebar ul li:hover {
+    background-color: #f0f0f0; /* 살짝 어두운 배경색 */
+}
+
+#hospital-sidebar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge에서 스크롤바 숨김 */
+}
+
+/*****************/
+/* 검색 버튼 스타일 */
+#hospital-search-button {
+    background-color: #7DAF82;
+    color: white;
+    padding: 8px 20px;
+}
+
+#hospital-search-button:hover {
+    background-color: #5C8D6D;
+}
+
+/*****************/
+/* 검색창 고정 */
+.hospital-search-container {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1000;
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+}
+
+/* 검색 결과 스크롤 가능 */
+.hospital-results-container {
+    max-height: calc(100vh - 260px); /* 검색창 제외한 높이 */
+    scroll-padding-bottom: 1rem; /* 스크롤 끝 부분에 여백 추가 */
+    padding-bottom: 1rem; /* 시각적 여백 추가 */
+    box-sizing: border-box;
+    overflow-y: auto; /* 세로 스크롤 허용 */
+    scrollbar-width: none; /* Firefox에서 스크롤바 숨김 */
+}
+
+/* 검색 결과 리스트 스타일 */
+.hospital-results-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.hospital-results-container li {
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+}

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="usr/common/head"/>
+    <title>TailsRoute</title>
+    <link rel="stylesheet" href="/resource/css/join.css"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        .success-message {
+            color: #22c55e;
+        }
+
+        .error-message {
+            color: #ef4444;
+        }
+    </style>
+</head>
+
+<script src="/resource/js/join.js"></script>
+
+<body>
+
+<!-- 회원 가입 타이틀 -->
+<header class="tw-pt-16 tw-text-center tw-translate-y-12">
+    <h4 class="tw-text-4xl tw-font-bold tw-text-[#3A3A3A]">회원가입</h4>
+</header>
+<!-- 메인 콘텐츠 -->
+<main class="tw-flex-1 tw-flex tw-items-center tw-justify-center tw-w-full tw-mt-10 tw-px-4 lg:tw-px-8">
+    <!-- 전체 레이아웃 컨테이너 -->
+    <div class="tw-flex tw-flex-col lg:tw-flex-row tw-w-full tw-max-w-6xl">
+        <!-- 회원 가입 폼 -->
+        <section class="tw-flex-1 tw-px-4 tw-py-6 lg:tw-p-8">
+            <form class="join-form tw-space-y-4" action="/usr/member/doJoin" method="POST" name="join">
+
+                <!-- 아이디 -->
+
+                <div class="tw-form-control">
+                    <label class="tw-label">
+                        <span class="tw-label-text tw-font-medium">아이디</span>
+                    </label>
+                    <input id="loginId" type="text" placeholder="아이디"
+                           class="tw-input tw-w-full tw-border tw-rounded-md focus:tw-ring-2 focus:tw-ring-[#7DAF82]"
+                           name="loginId" required/>
+                    <p class="tw-text-sm" id="loginId-message"></p>
+                </div>
+
+                <!-- 비밀번호 -->
+                <div class="tw-form-control">
+                    <label class="tw-label">
+                        <span class="tw-label-text tw-font-medium">비밀번호</span>
+                    </label>
+                    <input id="loginPw" type="password" placeholder="비밀번호"
+                           class="tw-input tw-w-full tw-border tw-rounded-md focus:tw-ring-2 focus:tw-ring-[#7DAF82]"
+                           name="loginPw" required/>
+                    <p class="tw-text-sm" id="loginPw-message"></p>
+                </div>
+
+                <!-- 비밀번호 확인 -->
+                <div class="tw-form-control">
+                    <label class="tw-label">
+                        <span class="tw-label-text tw-font-medium">비밀번호 확인</span>
+                    </label>
+                    <input id="confirmPw" type="password" placeholder="비밀번호 확인"
+                           class="tw-input tw-w-full tw-border tw-rounded-md focus:tw-ring-2 focus:tw-ring-[#7DAF82]"
+                           name="confirmPw" required/>
+                    <p class="tw-text-sm" id="confirmPw-message"></p>
+                </div>
+                <!-- 사용자 이름 -->
+                <div class="tw-form-control">
+                    <label class="tw-label">
+                        <span class="tw-label-text tw-font-medium">이름</span>
+                    </label>
+                    <input id="name" type="text" placeholder="이름"
+                           class="tw-input tw-w-full tw-border tw-rounded-md focus:tw-ring-2 focus:tw-ring-[#7DAF82]"
+                           name="name" required/>
+                    <p class="tw-text-sm" id="name-message"></p>
+                </div>
+
+                <!-- 이메일 -->
+                <div class="tw-form-control tw-flex tw-items-start tw-gap-2">
+                    <label class="tw-label">
+                        <span class="tw-label-text tw-font-medium">이메일</span>
+                    </label>
+                    <div class="tw-flex tw-items-center tw-w-full">
+                        <input id="email" type="text" placeholder="이메일"
+                               class="tw-input tw-border tw-rounded-md focus:tw-ring-2 focus:tw-ring-[#7DAF82] tw-flex-1"
+                               style="max-width: calc(100% - 100px);" name="email" required/>
+                        <button type="button"
+                                class="sendMail tw-btn tw-text-white tw-font-bold tw-rounded-md tw-ml-2"
+                                style="width: 80px;">
+                            요청
+                        </button>
+                    </div>
+                    <p class="tw-text-sm tw-w-full" id="email-message"></p>
+                </div>
+
+                <!-- 인증번호 입력 -->
+                <div class="tw-form-control tw-flex tw-items-start tw-gap-2" id="auth-code-container" style="display: none;">
+                    <label class="tw-label">
+                        <span class="tw-label-text tw-font-medium">인증 번호</span>
+                    </label>
+                    <div class="tw-flex tw-items-center tw-w-full">
+                        <input id="authCode" type="text" placeholder="인증 번호 입력"
+                               class="tw-input tw-border tw-rounded-md focus:tw-ring-2 focus:tw-ring-[#7DAF82] tw-flex-1"
+                               style="max-width: calc(100% - 100px);"/>
+                        <button type="button"
+                                class="verifyAuthCode tw-btn tw-bg-[#7DAF82] tw-text-white tw-font-bold tw-rounded-md tw-ml-2"
+                                style="width: 80px;">
+                            확인
+                        </button>
+                    </div>
+                    <span id="authCode-check" style="display: none; margin-left: 10px;">✅</span>
+                    <span id="authCode-error" style="display: none; margin-left: 10px; color: red;">❌</span>
+                    <p class="tw-text-sm tw-w-full" id="authCode-message"></p>
+                </div>
+
+
+
+                <!-- 닉네임 -->
+                <div class="tw-form-control">
+                    <label class="tw-label">
+                        <span class="tw-label-text tw-font-medium">닉네임</span>
+                    </label>
+                    <input id="nickname" type="text" placeholder="닉네임"
+                           class="tw-input tw-w-full tw-border tw-rounded-md focus:tw-ring-2 focus:tw-ring-[#7DAF82]"
+                           name="nickname" required/>
+                    <p class="tw-text-sm" id="nickname-message"></p>
+                </div>
+
+                <!-- 전화번호 -->
+                <div class="tw-form-control">
+                    <label class="tw-label">
+                        <span class="tw-label-text tw-font-medium">전화번호</span>
+                    </label>
+                    <input id="cellphoneNum" type="text" placeholder="전화번호"
+                           class="tw-input tw-w-full tw-border tw-rounded-md focus:tw-ring-2 focus:tw-ring-[#7DAF82]"
+                           name="cellphoneNum" oninput="autoHyphen(this)" required/>
+                    <p class="tw-text-sm" id="cellphoneNum-message"></p>
+                </div>
+
+                <!-- 회원가입 버튼 -->
+                <button type="submit"
+                        class="join-button tw-btn tw-w-full tw-text-white tw-font-bold tw-rounded-md ">
+                    회원 가입
+                </button>
+            </form>
+        </section>
+
+        <!-- 구분선 -->
+        <div class="tw-hidden lg:tw-flex tw-items-center">
+            <div class="tw-h-[70%] tw-w-[1px] tw-bg-gray-100"></div>
+        </div>
+
+        <!-- 소셜 로그인 -->
+        <section class="tw-flex-1 tw-flex tw-flex-col tw-justify-center tw-px-4 tw-py-6 lg:tw-p-8">
+            <div class="tw-space-y-4 tw-max-w-md tw-mx-auto">
+                <h5 class="tw-text-2xl tw-font-bold tw-text-gray-800 tw-mb-4 text-center">소셜 계정으로 가입</h5>
+                <button class="social-button kakao tw-btn tw-btn-outline tw-w-full hover:tw-text-white tw-py-2" onclick="window.location.href='/usr/member/kakao-login';">
+                    카카오 계정으로 로그인
+                </button>
+                <button class="social-button naver tw-btn tw-btn-outline tw-w-full tw-text-button tw-border-button hover:tw-bg-button hover:tw-text-white"
+                        onclick="window.location.href='/usr/member/naver-login';">
+                    네이버 계정으로 가입
+                </button>
+
+            </div>
+        </section>
+
+    </div>
+</main>
+</body>

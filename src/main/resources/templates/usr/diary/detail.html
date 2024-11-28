@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Pet Diary Detail</title>
+    <link rel="stylesheet" href="/resource/css/diary/DiaryDetail.css">
+</head>
+<body>
+
+<!-- 헤더 -->
+<div class="header">
+    <th:block th:replace="usr/common/head"/>
+</div>
+
+<!-- 메인 콘텐츠 -->
+<div class="container">
+    <!-- 제목 -->
+    <div class="tw-text-center tw-text-[50px] tw-p-[20px] tw-border-b-2 tw-border-[#DADADA] tw-max-w-[1440px] tw-mx-auto" th:text="${diary.title}"></div>
+
+    <!-- 다이어리 상세정보 -->
+    <div class="diary-details">
+        <p><strong th:text="${diary.extra__writer}"></strong> | <span th:text="${diary.regDate}"></span></p>
+    </div>
+
+    <!-- 다이어리 이미지 -->
+    <div class="diary-image">
+        <img th:src="${diary.imagePath}" alt="Diary Image" class="image">
+    </div>
+
+    <!-- 본문 텍스트 -->
+    <p class="body-text" th:text="${diary.body}"></p>
+
+    <!-- 복용약 정보 테이블 -->
+    <div class="medicine-info">
+        <h2 class="sub-title">복용약 정보</h2>
+        <table class="info-table">
+            <tr>
+                <td class="info-label">시작일</td>
+                <td class="info-value" th:text="${diary.startDate}"></td>
+            </tr>
+            <tr>
+                <td class="info-label">종료일</td>
+                <td class="info-value" th:text="${diary.endDate}"></td>
+            </tr>
+            <tr>
+                <td class="info-label">시간</td>
+                <td class="info-value" th:text="${diary.takingTime}"></td>
+            </tr>
+            <tr>
+                <td class="info-label">특이사항</td>
+                <td class="info-value" th:text="${diary.information}"></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- 행동 버튼들 -->
+    <div class="action-buttons">
+        <a th:href="@{/usr/diary/modify(id=${diary.id})}" class="btn">수정</a>
+        <form th:action="@{/usr/diary/delete(id=${diary.id})}" method="post">
+            <button type="submit" class="btn" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
+        </form>
+        <a th:href="@{/usr/diary/list}" class="btn">목록</a>
+        <a th:href="@{/usr/diary/recommend(id=${diary.id})}" class="btn">공유</a>
+    </div>
+</div>
+
+<script src="/resource/js/diary/DiaryDetail.js"></script>
+</body>
+</html>
